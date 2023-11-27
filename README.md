@@ -13,6 +13,8 @@ Install requirements to use RTSP2HTTP:
 ```bash
 XAMPP (make sure the installation goes to /opt/lampp/):
 https://www.apachefriends.org/index.html
+(Guide for installation):
+https://smarttech101.com/how-to-install-and-manage-xampp-in-linux/
 
 FFMPEG:
 sudo apt-get update && sudo apt-get install -y ffmpeg
