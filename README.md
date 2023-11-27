@@ -10,18 +10,25 @@ This project is intended to convert RTSP streams to HTTP.
 
 Install requirements to use RTSP2HTTP:
 
-```bash
 XAMPP (make sure the installation goes to /opt/lampp/):
+
 https://www.apachefriends.org/index.html
+
 (Guide for installation):
+
 https://smarttech101.com/how-to-install-and-manage-xampp-in-linux/
 
+
 FFMPEG:
+```bash
 sudo apt-get update && sudo apt-get install -y ffmpeg
+```
 
 SSH:
+```bash
 sudo apt-get update && sudo apt-get install -y ssh
 ```
+
     
 ## Setup
 
