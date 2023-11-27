@@ -28,7 +28,10 @@ Follow these steps to configure and run RTSP2HTTP in your environment:
 
 ```bash
 1. Repository Files Preparation:
-   Ensure all the necessary files from the repository are located in the /opt/lampp/htdocs/ directory. This is crucial for the proper functioning of the project.
+   Ensure all the necessary files from the repository are located in the /opt/lampp/htdocs/ directory. This is crucial for the proper functioning of the project:
+
+cd /opt/lampp/htdocs
+git clone --branch beta-1 https://github.com/nullvoid413/RTSP2HTTP
 
 2. Set Executable Permissions:
    Open your terminal and run the following command to grant executable permissions to all files in the /opt/lampp/htdocs/ directory:
