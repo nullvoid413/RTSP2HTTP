@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Live Streaming</title>
+    <style>
+        /* Reset body and html margins and padding */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden; /* Hide scrollbars */
+        }
+        /* Make video fill the entire page */
+        #player {
+            width: 450px !important; /* Viewport width */
+            height: 250px !important; /* Viewport height */
+            object-fit: cover; /* Cover the whole screen without stretching. */
+            position: fixed; /* Fixed position to cover the viewport */
+            top: 0;
+            left: 0;
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/video.js@7.11.4/dist/video-js.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/video.js@7.11.4/dist/video.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+</head>
+<body>
+<video id="player" class="video-js vjs-default-skin" controls autoplay muted></video>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var video = document.getElementById('player');
+   var streamUrl = 'REPLACE_WITH_STREAM_URL'; // Placeholder for the stream URL
+    if (Hls.isSupported()) {
+        var hls = new Hls();
+        hls.loadSource(streamUrl);
+        hls.attachMedia(video);
+        hls.on(Hls.Events.MANIFEST_PARSED, function() {
+            // Autoplay is set on the video tag, so no need to call play() here
+        });
+    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        video.src = streamUrl;
+        video.addEventListener('loadedmetadata', function() {
+            // Same here, the autoplay attribute will take care of playing the video
+        });
+    }
+});
+</script>
+</body>
+</html>
