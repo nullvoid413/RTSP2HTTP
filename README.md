@@ -1,7 +1,7 @@
 # RTSP2HTTP
 This project is intended to convert RTSP streams to HTTP.
 
-
+*If you detect any bug/problem using the script, open an issue on Github and explain the steps where it happened and how, so I can reproduce and fix them.*
 
 
 
