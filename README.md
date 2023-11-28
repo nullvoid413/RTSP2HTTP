@@ -18,7 +18,7 @@ https://www.apachefriends.org/index.html
 
 https://smarttech101.com/how-to-install-and-manage-xampp-in-linux/
 
-*XAMPP will be replaced with Lamp in future updates*
+*XAMPP will be replaced with LAMP in future updates, but for now, use XAMPP.*
 
 FFMPEG:
 ```bash
