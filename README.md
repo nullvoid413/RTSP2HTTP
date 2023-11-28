@@ -60,7 +60,7 @@ cd /opt/lampp/htdocs
 
 *Input the RTSP link for each of your cameras. Remember, each line in this file corresponds to one camera. To configure multiple cameras, simply add more lines with their respective RTSP links.*
 ```bash
-   Edit the stream_config.conf file located in the directory. 
+   Edit the stream_config.conf file that you downloaded from this Repo which is located in /opt/lampp/htdocs/ directory. 
 ```
 
 5. Initiate Streaming Process:
