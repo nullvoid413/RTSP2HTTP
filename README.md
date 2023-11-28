@@ -29,7 +29,7 @@ SSH:
 sudo apt-get update && sudo apt-get install -y ssh
 ```
 Git:
-*(Optional, you can download the files from this repo withotu git):*
+*(Optional, you can download the files from this repo without git)*
 ```bash
 sudo apt-get update && sudo apt-get install -y git
 ```
