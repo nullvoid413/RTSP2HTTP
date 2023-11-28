@@ -28,8 +28,11 @@ SSH:
 ```bash
 sudo apt-get update && sudo apt-get install -y ssh
 ```
-
-    
+Git:
+*(Optional, you can download the files from this repo withotu git):*
+```bash
+sudo apt-get update && sudo apt-get install -y git
+```
 ## Setup
 
 1. Repository Files Preparation:
