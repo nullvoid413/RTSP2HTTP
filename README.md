@@ -35,11 +35,9 @@ sudo apt-get update && sudo apt-get install -y ssh
 1. Repository Files Preparation:
 
 *Ensure all the necessary files from the repository are located in the /opt/lampp/htdocs/ directory. This is crucial for the proper functioning of the project.*
+
 ```bash
-cd /opt/lampp/htdocs
-```
-```bash
-git clone --branch beta-1 https://github.com/nullvoid413/RTSP2HTTP
+sudo git clone --branch beta-1 https://github.com/nullvoid413/RTSP2HTTP /opt/lampp/htdocs/
 ```
 
 2. Set Executable Permissions:
