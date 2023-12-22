@@ -2,64 +2,24 @@
 
 # Define the output file in the current directory
 output_file="serveo_output.txt"
-url_file="/opt/lampp/htdocs/current_serveo_url.txt"  # File to store the current Serveo URL
+url_file="/var/www/html/current_serveo_url.txt"  # File to store the current Serveo URL
 
-# Start Serveo SSH tunnel in the background and redirect output to the output file
-sudo ssh -tt -R 80:localhost:80 serveo.net > "$output_file" 2>&1 &
-ssh_pid=$!
+# Get the IP address of the host
+host_ip=$(hostname -I | awk '{print $1}')
+echo "Host IP: $host_ip"
 
-# Timeout for checking the Serveo URL
-timeout=30
-
-# Initialize a variable to store the Serveo URL
-serveo_url=""
-
-# Function to extract and print Serveo URL
-get_serveo_url() {
-    local url_pattern="https?://\S+\.serveo\.net"
-    local found_url
-    found_url=$(grep -oP "$url_pattern" "$output_file" | head -1)
-    if [ -n "$found_url" ]; then
-        serveo_url="$found_url"
-        echo "Serveo URL: $serveo_url"
-        return 0
-    else
-        return 1
-    fi
-}
-
-# Loop to check the output file for the Serveo URL
-while [ $timeout -gt 0 ]; do
-    if get_serveo_url; then
-        > "$output_file"
-        break
-    fi
-    sleep 1
-    ((timeout--))
-done
-
-# If URL not found in specified time, kill SSH process
-if [ -z "$serveo_url" ]; then
-    echo "Serveo URL not found within the expected time."
-    sudo kill $ssh_pid
-    exit 1
-fi
-
-# Compare with the previous URL and update HTML files if different
+# Compare with the previous IP and update HTML files if different
 if [ -f "$url_file" ]; then
-    previous_url=$(cat "$url_file")
-    if [ "$serveo_url" != "$previous_url" ]; then
-        sudo ./update_html.sh "$serveo_url"
+    previous_ip=$(cat "$url_file")
+    if [ "$host_ip" != "$previous_ip" ]; then
+        sudo ./update_html.sh "$host_ip"
     fi
 else
-    sudo ./update_html.sh "$serveo_url"  # First time setup or URL file not found
+    sudo ./update_html.sh "$host_ip"  # First time setup or IP file not found
 fi
 
-# Update the URL file with the current URL
-echo "$serveo_url" > "$url_file"
+# Update the IP file with the current IP
+echo "$host_ip" > "$url_file"
 
-# Display the Serveo URL in a Zenity text entry dialog
-zenity --entry --title="Serveo URL" --text="Serveo URL:" --entry-text="$serveo_url" --width=300 --height=50
-
-# Cleanup: Optionally remove the output file
-rm "$output_file"
+# Display the Host IP in a Zenity text entry dialog
+zenity --entry --title="Host IP" --text="Host IP:" --entry-text="$host_ip" --width=300 --height=50

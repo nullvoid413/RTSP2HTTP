@@ -30,7 +30,7 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     var video = document.getElementById('player');
-   var streamUrl = 'REPLACE_WITH_STREAM_URL'; // Placeholder for the stream URL
+    var streamUrl = 'REPLACE_WITH_STREAM_URL'; // Placeholder for the stream URL
     if (Hls.isSupported()) {
         var hls = new Hls();
         hls.loadSource(streamUrl);
@@ -48,3 +48,4 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 </body>
 </html>
+

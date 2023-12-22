@@ -1,35 +1,52 @@
 #!/bin/bash
 
 # Path to the configuration file
-config_file="/opt/lampp/htdocs/stream_config.conf"
+config_file="/var/www/html/stream_config.conf"
 
 # Path to the HTML template
-html_template="/opt/lampp/htdocs/template.html"
+html_template="/var/www/html/template.html"
 
 # Directory containing the HTML files
-html_directory="/opt/lampp/htdocs"
-video_directory="/opt/lampp/htdocs" # Update with the path where .ts video files are generated
-metadata_file="/opt/lampp/htdocs/camera_metadata.json"
+html_directory="/var/www/html"
+video_directory="/var/www/html" # Update with the path where .ts video files are generated
+metadata_file="/var/www/html/camera_metadata.json"
 
 # Function to start an ffmpeg stream
 start_ffmpeg_stream() {
     local url=$1
     local stream_number=$2
-    local output_file="/opt/lampp/htdocs/stream$stream_number.m3u8" # Changed file extension to .m3u8
-    local thumbnail_file="/opt/lampp/htdocs/camera${stream_number}.jpg"
+    local output_file="/var/www/html/stream$stream_number.m3u8" # Use actual stream number in the filename
+    local thumbnail_file="/var/www/html/camera${stream_number}.jpg"
+    local html_file="/var/www/html/camera${stream_number}.html" # HTML file for this stream
 
     # Start ffmpeg to generate the stream and m3u8 file
-    sudo ffmpeg -rtsp_transport tcp -i "$url" -c:v copy -c:a copy -f hls -hls_time 2 -hls_list_size 3 -hls_flags delete_segments -hls_segment_filename "/opt/lampp/htdocs/stream${stream_number}-%03d.ts" "$output_file" 2> "${output_file}.log" &
+    sudo ffmpeg -rtsp_transport tcp -i "$url" -c:v copy -c:a copy -f hls -hls_time 2 -hls_list_size 3 -hls_flags delete_segments -hls_segment_filename "/var/www/html/stream${stream_number}-%03d.ts" "$output_file" 2> "${output_file}.log" &
 
     # Generate a thumbnail for the stream
     generate_thumbnail "$output_file" "$thumbnail_file"
 
     # Add camera metadata to the metadata file
-    echo "{\"camera\": $stream_number, \"video_file\": \"stream$stream_number.m3u8\"}" >> "$metadata_file"
+    echo "{\"camera\": $stream_number, \"video_file\": \"stream$stream_number.m3u8\"}" >> "/var/www/html/camera_metadata.json"
 
     # Generate thumbnails and camera links for index.html
     generate_html_content "$stream_number" "$thumbnail_file"
+
+    # Update the stream URL in the HTML file
+    local host_ip=$(hostname -I | awk '{print $1}')
+    local new_url="http://${host_ip}/stream${stream_number}.m3u8"
+    sed -i "s|var streamUrl = '.*';|var streamUrl = '$new_url';|" "$html_file"
+
+    # Update the template.html separately with a generic placeholder URL
+    sed -i "s|REPLACE_WITH_STREAM_URL|http://${host_ip}/streamX.m3u8|" "/var/www/html/template.html"
+
+    echo "HTML file successfully updated: $html_file"
 }
+
+
+
+
+
+
 
 # Function to generate a thumbnail for a video file
 generate_thumbnail() {
