@@ -4,7 +4,7 @@
 serveo_domain=$1
 
 # Directory containing the HTML files
-html_directory="/opt/lampp/htdocs"
+html_directory="/var/www/html"
 
 # Loop through each generated HTML file in the directory (excluding template.html)
 for html_file in "$html_directory"/camera*.html; do

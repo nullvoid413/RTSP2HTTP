@@ -2,7 +2,7 @@
 
 # Define the output file in the current directory
 output_file="serveo_output.txt"
-url_file="/opt/lampp/htdocs/current_serveo_url.txt"  # File to store the current Serveo URL
+url_file="/var/www/html/current_serveo_url.txt"  # File to store the current Serveo URL
 
 # Start Serveo SSH tunnel in the background and redirect output to the output file
 sudo ssh -tt -R 80:localhost:80 serveo.net > "$output_file" 2>&1 &
@@ -59,7 +59,7 @@ fi
 echo "$serveo_url" > "$url_file"
 
 # Display the Serveo URL in a Zenity text entry dialog
-zenity --entry --title="Serveo URL" --text="Serveo URL:" --entry-text="$serveo_url" --width=300 --height=50
+echo "Serveo URL: $serveo_url"
 
 # Cleanup: Optionally remove the output file
 rm "$output_file"
